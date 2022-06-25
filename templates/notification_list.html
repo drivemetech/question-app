@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications |</title>
+    <meta name="robots" content="noindex">
+    <meta name="googlebot" content="noindex">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+     rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" 
+    crossorigin="anonymous">
+    <link rel="shortcut icon" href="https://scontent.fabb1-2.fna.fbcdn.net/v/t39.30808-6/286283908_111367944934856_7702637904057720739_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeE3TBlF_wtQ4ky1RNTBddHk_4zWFdP1333_jNYV0_Xffb8oSspbRwn0EniQxG-uis7Bp-HxqtHvEBAV2xxpYx4L&_nc_ohc=3ouYM5xCkiYAX_ztPgT&_nc_zt=23&_nc_ht=scontent.fabb1-2.fna&oh=00_AT9LL2LTeJ4ZcETXNrg0CNTNvqerdTLwvCYV3Hla9IrSeg&oe=62A83358">
+
+</head>
+<style>
+    .notify{
+        color: dodgerblue;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    }
+</style>
+<body>
+    <br>
+    <br>
+    <div class="container">
+        <h1 class="notify">
+            Notifications
+        </h1>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            {% for notification in object_list %}
+            <div class="col">
+                <div class="card my-3">
+                    <p class="card-text">{{ notification.message }}</p>
+                    <a href="{% url 'view-Question' notification.url.post.slug %}" class="btn btn-primary">Click here to see</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
