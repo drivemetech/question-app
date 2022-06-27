@@ -41,8 +41,17 @@
                 </div>
                 <div class="card-body">
                   <h5 class="card-title">From: {{answer.user.username.upper}}</h5>
-                  <p class="card-text">{{answer.answer|safe}}</p>
-                </div>
+                  <p class="card-text">{{answer.answer|safe}}</p>                  
+                  {% if request.user != answer.user %}
+                      <a href="{% url 'like-answer' pk=answer.pk %}" class="btn btn-primary">
+                        {{ answer.likes_count }} Like
+                      </a>
+                  {% else %}                  
+                      <a href="#" class="btn btn-primary disabled ">
+                        {{ answer.likes_count }} Like
+                      </a>                  
+                  {% endif %}
+                </div>                
               </div>
         </div>
         {% endfor %}

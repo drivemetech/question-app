@@ -8,7 +8,7 @@ from django.views.generic.edit import UpdateView
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
+from django.db.models import Q, Count
 
 
 @login_required(login_url='login')
@@ -31,7 +31,7 @@ def index(request):
 def viewQuestion(request, slug):
     question = get_object_or_404(Question, slug=slug)
 
-    answers = Answer.objects.filter(post_id=question)
+    answers = Answer.objects.filter(post_id=question).annotate(likes_count=Count("like"))
 
     context = {'question':question, 'answers':answers}
 
@@ -102,7 +102,7 @@ def register(request):
                 return redirect('register')
             else:
                 user = User.objects.create_user(username=username, first_name=first_name, last_name=last_name, email=email, password=password)
-                user.save();
+                user.save()
                 return redirect('index')
         else:
             messages.info(request, 'Password Not Match')
@@ -111,3 +111,8 @@ def register(request):
     else:
         return render(request, 'signup.html')
 
+
+def like_answer(request, pk):
+    answer = get_object_or_404(Answer, pk=pk)        
+    Like.objects.get_or_create(post=answer, user=request.user)    
+    return redirect('view-Question', answer.post.slug)

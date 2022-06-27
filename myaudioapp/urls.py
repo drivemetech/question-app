@@ -9,4 +9,5 @@ urlpatterns = [
     path('question/', views.My_Question.as_view(), name='question'),
     path('register/', views.register, name='register'),
     path('notification/', views.NotificationListView.as_view(), name='notification'),
+    path('answer/<int:pk>/like', views.like_answer, name='like-answer'),
 ]
