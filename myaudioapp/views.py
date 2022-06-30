@@ -30,8 +30,10 @@ def index(request):
 
 def public_profile(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
+    number_of_likes = Like.objects.filter(post__user=request.user).count()
     context = {
-        'profile':profile
+        'profile':profile,
+        'number_of_likes':number_of_likes
     }
     return render(request, 'public_profile.html', context)
 
