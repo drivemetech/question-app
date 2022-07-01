@@ -2,6 +2,7 @@ from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404, render, redirect, get_list_or_404
 from .models import Notification, Question, Answer, Like, Profile
 from django.contrib.auth.models import User, auth
+from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from django.views.generic import CreateView
 from django.views.generic.edit import UpdateView
@@ -30,7 +31,10 @@ def index(request):
 
 def public_profile(request, slug):
     profile = get_object_or_404(Profile, slug=slug)
-    number_of_likes = Like.objects.filter(post__user=request.user).count()
+    try:
+        number_of_likes = Like.objects.filter(post__user=profile.user).count()
+    except ObjectDoesNotExist:
+        number_of_likes = None
     context = {
         'profile':profile,
         'number_of_likes':number_of_likes
