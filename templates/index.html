@@ -50,9 +50,13 @@
             <div class="col-md-4">
                 <div class="card my-3">
                     <div class="card-header">
-                        <a href="{% url 'Public_Profile' question.user.profile.slug %}">
+                        {% if question.user.profile %}
+                            <a href="{% url 'Public_Profile' question.user.profile.slug %}">
+                                {{question.user.username}}
+                            </a>
+                        {% else %}
                             {{question.user.username}}
-                        </a>
+                        {% endif %}
                     </div>
                     <div class="card-body">
                         <a href="{% url 'view-Question' question.slug %}" style="text-decoration: none;">
